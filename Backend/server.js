@@ -1,14 +1,20 @@
 import express from "express";
+import mongoose from "mongoose";
 
-import data from "./data.js";
+import eventRouter from "./routers/eventRouter.js";
 
 const app = express();
-app.get("/api/events", (req, res) => {
-  res.send(data.events);
+
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ramco", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
+app.use("/api/events", eventRouter);
+
 app.get("/", (req, res) => {
-  res.send("Server is jkj ready");
+  res.send("Server is ready");
 });
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
