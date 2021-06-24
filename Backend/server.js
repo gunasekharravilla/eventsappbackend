@@ -6,6 +6,8 @@ import path from "path";
 import eventRouter from "./routers/eventRouter.js";
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ramco", {
   useNewUrlParser: true,

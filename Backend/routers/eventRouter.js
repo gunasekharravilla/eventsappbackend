@@ -22,6 +22,18 @@ eventRouter.get(
   })
 );
 
+eventRouter.get(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const event = await Event.findById(req.params.id);
+    if (event) {
+      res.send(event);
+    } else {
+      res.status(404).send({ message: "Event Not Found" });
+    }
+  })
+);
+
 eventRouter.post(
   "/",
   expressAsyncHandler(async (req, res) => {
@@ -52,17 +64,6 @@ eventRouter.put(
       res.send({ message: "Event Updated", event: updatedEvent });
     } else {
       res.status(404).send({ message: "event Not Found" });
-    }
-  })
-);
-eventRouter.get(
-  "/:id",
-  expressAsyncHandler(async (req, res) => {
-    const event = await Event.findById(req.params.id);
-    if (event) {
-      res.send(event);
-    } else {
-      res.status(404).send({ message: "Event Not Found" });
     }
   })
 );
