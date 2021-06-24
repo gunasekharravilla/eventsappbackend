@@ -3,7 +3,7 @@ const data = {
     {
       title: "Seminar on Mern Stack by Aravind",
       image: "/images/p1.jpg",
-      rating: 4.5,
+      rating: 4.6,
       seatCount: 20,
       numReviews: 11,
       description:
