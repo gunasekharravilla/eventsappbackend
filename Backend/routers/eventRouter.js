@@ -44,14 +44,25 @@ eventRouter.put(
     const eventId = req.params.id;
     const event = await Event.findById(eventId);
     if (event) {
-      event.name = req.body.name;
+      event.title = req.body.title;
       event.image = req.body.image;
-      event.seatCount = req.body.countInStock;
+      event.seatCount = req.body.seatCount;
       event.description = req.body.description;
       const updatedEvent = await event.save();
       res.send({ message: "Event Updated", event: updatedEvent });
     } else {
       res.status(404).send({ message: "event Not Found" });
+    }
+  })
+);
+eventRouter.get(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const event = await Event.findById(req.params.id);
+    if (event) {
+      res.send(event);
+    } else {
+      res.status(404).send({ message: "Event Not Found" });
     }
   })
 );
