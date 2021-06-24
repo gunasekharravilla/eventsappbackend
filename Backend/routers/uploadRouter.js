@@ -7,15 +7,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 uploadRouter.use(express.static("./uploads"));
 
-// const storage = multer.diskStorage({
-//   destination(req, file, cb) {
-//     cb(null, "uploads/");
-//   },
-//   filename(req, file, cb) {
-//     cb(null, `${Date.now()}.jpg`);
-//   },
-// });
-
 uploadRouter.post("/", upload.single("image"), async (req, res) => {
   fs.access("./uploads", (error) => {
     if (error) {
@@ -26,9 +17,9 @@ uploadRouter.post("/", upload.single("image"), async (req, res) => {
   const timestamp = new Date().toISOString();
   const ref = `${timestamp}-${originalname}.jpg`;
   await sharp(buffer)
-    .jpg({ quality: 20 })
+    .jpg({ quality: 50 })
     .toFile("./uploads/" + ref);
-  const link = `http://localhost:3000/${ref}`;
+  const link = `https://ramcoeventfront.herokuapp.com/${ref}`;
   return res.json({ link });
 });
 
